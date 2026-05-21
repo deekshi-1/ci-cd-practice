@@ -1,2 +1,46 @@
 pipeline {
+    agent any
 
+    environment {
+        IMAGE_NAME = 'CI/CD-Test'
+        CONTAINER_NAME = 'CI/CD-Test-Container'
+    }
+    
+    stages{
+        stage('Clone') {
+            steps { 
+                git branch: 'main', url: 'https://github.com/deekshi-1/ci-cd-practice.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo "Building stage runs here"'
+                sh 'docker build -t ${IMAGE_NAME} .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh '''
+                    echo "Testing stage runs here"
+                    docker run -d --name test -p 5001:5000 ${IMAGE_NAME}
+                    sleep 10
+                    docker ps
+                    docker logs test
+                    docker stop test
+                    docker rm -f test
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                    echo "Building stage runs here"
+                    docker run -d \
+                    --name ${CONTAINER_NAME} \
+                    -p 5000:5000 \
+                    ${IMAGE_NAME}
+                '''
+            }
+        }
+    }
+}
