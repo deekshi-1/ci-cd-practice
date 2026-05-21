@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'CI/CD-Test'
-        CONTAINER_NAME = 'CI/CD-Test-Container'
+        IMAGE_NAME = 'ci-cd-test'
+        CONTAINER_NAME = 'ci-cd-test-container'
     }
     
     stages{
