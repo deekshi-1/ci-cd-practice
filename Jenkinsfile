@@ -39,6 +39,9 @@ pipeline {
                     --name ${CONTAINER_NAME} \
                     -p 5000:5000 \
                     ${IMAGE_NAME}
+                    sleep 300
+                    docker stop ${CONTAINER_NAME}
+                    docker rm -f ${CONTAINER_NAME}
                 '''
             }
         }
