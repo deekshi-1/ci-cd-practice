@@ -31,7 +31,7 @@ pipeline {
                 '''
             }
         }
-        stage('Build') {
+        stage('Deploy') {
             steps {
                 sh '''
                     echo "Building stage runs here"
